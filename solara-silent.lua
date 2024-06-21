@@ -386,9 +386,9 @@ end
 
 -- // Toggle Feature // -- @55xud on discord
 local function toggleFeature()
-    getgenv().Flower.Enabled = not getgenv().SharpSSilent.Enabled
+    getgenv().Flower.Enabled = not getgenv().Flower.Enabled
     local status = getgenv().Flower.Enabled and "Flower Enabled" or "Flower Disabled"
-    if not getgenv().SharpSSilent.ToggleNotification then
+    if not getgenv().Flower.ToggleNotification then
         sendNotification("Flower [S] Silent", status, "rbxassetid://17561420493")
     end
     if not getgenv().Flower.Enabled then
@@ -462,9 +462,9 @@ Run_Service.RenderStepped:Connect(function()
 
                 local velocity = GetVelocity(Target, closestPart.Name)
                 local predictionOffset = Vector3.new(
-                    velocity.X * getgenv().SharpSSilent.Prediction.Horizontal,
-                    velocity.Y * getgenv().SharpSSilent.Prediction.Vertical,
-                    velocity.Z * getgenv().SharpSSilent.Prediction.Horizontal
+                    velocity.X * getgenv().Flower.Prediction.Horizontal,
+                    velocity.Y * getgenv().Flower.Prediction.Vertical,
+                    velocity.Z * getgenv().Flower.Prediction.Horizontal
                 )
                 Replicated_Storage.MainEvent:FireServer("UpdateMousePosI", closestPoint + predictionOffset)
             end
