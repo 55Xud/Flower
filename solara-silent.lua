@@ -25,7 +25,7 @@
 -- [+] Music
 -- [+] Fixed ATON OF SHIT while making this
 --[[ Disclaimer: 
-if your getting banned using Sharp Solara Silent, while da hood updated and,
+if your getting banned using Flowerz Solara Silent, while da hood updated and,
 its not my fault or anyones fault in my team your using Cheats at your OWN RISK,
 so be careful and check for Da Hood updates before using it.
 --]]
@@ -74,7 +74,7 @@ end
 
 -- // Update FOV Function // -- @55xud
 local function updateFov()
-    local settings = getgenv().SharpSSilent.FovSettings
+    local settings = getgenv().Flower.FovSettings
     clearFovParts()
     if settings.DynamicFOV.Enabled then
         local dynamicSettings = settings.DynamicFOV
@@ -137,7 +137,7 @@ end
 
 -- // Notification Function // -- @55xud on discord
 local function sendNotification(title, text, icon)
-    if not getgenv().SharpSSilent.ToggleNotification then
+    if not getgenv().Flower.ToggleNotification then
         StarterGui:SetCore("SendNotification", {
             Title = title,
             Text = text,
@@ -149,7 +149,7 @@ end
 
 -- // Watermark Function // -- @55xud on discord
 local function showWatermark()
-    if getgenv().SharpSSilent.Watermark.Enabled then
+    if getgenv().Flower.Watermark.Enabled then
         local screenGui = Instance.new("ScreenGui", game.CoreGui)
         local frame = Instance.new("Frame", screenGui)
         frame.Size = UDim2.new(0, 400, 0, 150)  -- Increased size for better visibility
@@ -205,7 +205,7 @@ local function showWatermark()
             )
         end)
 
-        if getgenv().SharpSSilent.Watermark.Sound then
+        if getgenv().Flower.Watermark.Sound then
             local sound = Instance.new("Sound", SoundService)
             sound.SoundId = "rbxassetid://9119802009"
             sound:Play()
@@ -214,7 +214,7 @@ local function showWatermark()
             end)
         end
 
-        if getgenv().SharpSSilent.Watermark.Music then
+        if getgenv().Flower.Watermark.Music then
             local music = Instance.new("Sound", SoundService)
             music.SoundId = "rbxassetid://9045766377"
             music.Looped = true
@@ -250,12 +250,12 @@ end
 local function isPartInFovAndVisible(part)
     local screenPoint, onScreen = Current_Camera:WorldToScreenPoint(part.Position)
     local distance = (V2(screenPoint.X, screenPoint.Y) - V2(Mouse.X, Mouse.Y)).Magnitude
-    return onScreen and distance <= getgenv().SharpSSilent.FovSettings.FovRadius
+    return onScreen and distance <= getgenv().Flower.FovSettings.FovRadius
 end
 
 -- // Check if Part Visible // -- @55xud on discord
 local function isPartVisible(part)
-    if not getgenv().SharpSSilent.WallCheck then 
+    if not getgenv().Flower.WallCheck then 
         return true
     end
     local origin = Current_Camera.CFrame.Position
@@ -332,9 +332,9 @@ end
 local function GetVelocity(player, part)
     if player and player.Character then
         local velocity = player.Character[part].Velocity
-        if velocity.Y < -30 and getgenv().SharpSSilent.Prediction.Resolver then
+        if velocity.Y < -30 and getgenv().Flower.Prediction.Resolver then
             return Vector3.new(velocity.X, 0, velocity.Z)
-        elseif velocity.Magnitude > 50 and getgenv().SharpSSilent.Prediction.Resolver then
+        elseif velocity.Magnitude > 50 and getgenv().Flower.Prediction.Resolver then
             return player.Character:FindFirstChild("Humanoid").MoveDirection * 16
         else
             return velocity
@@ -345,7 +345,7 @@ end
 
 -- // Get Target Hit Point // -- @55xud on discord
 local function GetTargetHitPoint(character)
-    local hitPart = character:FindFirstChild(getgenv().SharpSSilent.Targeting.HitPart)
+    local hitPart = character:FindFirstChild(getgenv().Flower.Targeting.HitPart)
     if hitPart and isPartVisible(hitPart) and isPartInFovAndVisible(hitPart) then
         return hitPart, hitPart.Position
     end
@@ -360,8 +360,8 @@ local function GetClosestPlr()
     for _, player in pairs(Players:GetPlayers()) do
         if player.Character and player ~= Local_Player and not Death(player) and not Grabbed(player) then
             local closestPart, closestPoint
-            if getgenv().SharpSSilent.Targeting.TargetMode == "Closest" then
-                if getgenv().SharpSSilent.Targeting.ClosestHitPoint then
+            if getgenv().Flower.Targeting.TargetMode == "Closest" then
+                if getgenv().Flower.Targeting.ClosestHitPoint then
                     closestPart, closestPoint = GetClosestHitPoint(player.Character)
                 else
                     closestPart, closestPoint = GetClosestBasePart(player.Character)
@@ -386,12 +386,12 @@ end
 
 -- // Toggle Feature // -- @55xud on discord
 local function toggleFeature()
-    getgenv().SharpSSilent.Enabled = not getgenv().SharpSSilent.Enabled
-    local status = getgenv().SharpSSilent.Enabled and "Sharp Enabled" or "Sharp Disabled"
+    getgenv().Flower.Enabled = not getgenv().SharpSSilent.Enabled
+    local status = getgenv().Flower.Enabled and "Flower Enabled" or "Flower Disabled"
     if not getgenv().SharpSSilent.ToggleNotification then
-        sendNotification("Sharp [S] Silent", status, "rbxassetid://17561420493")
+        sendNotification("Flower [S] Silent", status, "rbxassetid://17561420493")
     end
-    if not getgenv().SharpSSilent.Enabled then
+    if not getgenv().Flower.Enabled then
         Fov.Visible = false
         HitPoint.Visible = false
         clearFovParts()
@@ -405,7 +405,7 @@ end
 
 -- // Keybind Listener // -- @55xud on discord
 UserInputService.InputBegan:Connect(function(input, gameProcessed)
-    if not gameProcessed and input.KeyCode == getKeyCodeFromString(getgenv().SharpSSilent.Keybind) then
+    if not gameProcessed and input.KeyCode == getKeyCodeFromString(getgenv().Flower.Keybind) then
         toggleFeature()
     end
 end)
@@ -413,18 +413,18 @@ end)
 -- // Main Loop // -- @55xud on discord
 Run_Service.RenderStepped:Connect(function()
     frameCounter = frameCounter + 1
-    if getgenv().SharpSSilent.Enabled then
-        if getgenv().SharpSSilent.Humanization.Enabled and (tick() - lastSwitchTime < getgenv().SharpSSilent.Humanization.TargetSwitchDuration) then
+    if getgenv().Flower.Enabled then
+        if getgenv().Flower.Humanization.Enabled and (tick() - lastSwitchTime < getgenv().Flower.Humanization.TargetSwitchDuration) then
             return
         end
 
         Target = GetClosestPlr()
-        if Target and Target.Character and getgenv().SharpSSilent.Targeting.UntargetOnFall then
+        if Target and Target.Character and getgenv().Flower.Targeting.UntargetOnFall then
             local isCurrentlyFalling = isFalling(Target)
             if isCurrentlyFalling then
                 if not fallStartTime[Target] then
                     fallStartTime[Target] = tick()
-                elseif tick() - fallStartTime[Target] > getgenv().SharpSSilent.Targeting.FallThreshold then
+                elseif tick() - fallStartTime[Target] > getgenv().Flower.Targeting.FallThreshold then
                     Target = nil
                 end
             else
@@ -435,8 +435,8 @@ Run_Service.RenderStepped:Connect(function()
         updateFov()
         if Target and Target.Character then
             local closestPart, closestPoint
-            if getgenv().SharpSSilent.Targeting.TargetMode == "Closest" then
-                if getgenv().SharpSSilent.Targeting.ClosestHitPoint then
+            if getgenv().Flower.Targeting.TargetMode == "Closest" then
+                if getgenv().Flower.Targeting.ClosestHitPoint then
                     closestPart, closestPoint = GetClosestHitPoint(Target.Character)
                 else
                     closestPart, closestPoint = GetClosestBasePart(Target.Character)
@@ -446,7 +446,7 @@ Run_Service.RenderStepped:Connect(function()
             end
 
             if closestPart and closestPoint then
-                local hitPointSettings = getgenv().SharpSSilent.HitPoint
+                local hitPointSettings = getgenv().Flower.HitPoint
                 if hitPointSettings.ShowHitPoint then
                     HitPoint.Visible = true
                     local screenPoint = Current_Camera:WorldToViewportPoint(closestPoint)
@@ -483,8 +483,8 @@ local function HookTool(tool)
             if Target and Target.Character and tick() - lastToolUse > 0.1 then  -- Debounce for 0.1 seconds
                 lastToolUse = tick()
                 local closestPart, closestPoint
-                if getgenv().SharpSSilent.Targeting.TargetMode == "Closest" then
-                    if getgenv().SharpSSilent.Targeting.ClosestHitPoint then
+                if getgenv().Flower.Targeting.TargetMode == "Closest" then
+                    if getgenv().Flower.Targeting.ClosestHitPoint then
                         closestPart, closestPoint = GetClosestHitPoint(Target.Character)
                     else
                         closestPart, closestPoint = GetClosestBasePart(Target.Character)
@@ -496,9 +496,9 @@ local function HookTool(tool)
                 if closestPart and closestPoint then
                     local velocity = GetVelocity(Target, closestPart.Name)
                     local predictionOffset = Vector3.new(
-                        velocity.X * getgenv().SharpSSilent.Prediction.Horizontal,
-                        velocity.Y * getgenv().SharpSSilent.Prediction.Vertical,
-                        velocity.Z * getgenv().SharpSSilent.Prediction.Horizontal
+                        velocity.X * getgenv().Flower.Prediction.Horizontal,
+                        velocity.Y * getgenv().Flower.Prediction.Vertical,
+                        velocity.Z * getgenv().Flower.Prediction.Horizontal
                     )
                     Replicated_Storage.MainEvent:FireServer("UpdateMousePosI", closestPoint + predictionOffset)
                 end
